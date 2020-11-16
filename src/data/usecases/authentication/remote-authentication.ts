@@ -1,3 +1,4 @@
+import { AccountModel } from "../../../domain/models/account-model";
 import { IHttpPostClient } from "../../protocols/http/http-post-client";
 import { HttpStatusCode } from "../../protocols/http/http-response";
 import { AuthenticationParams } from "../../../domain/usecases/authentication";
@@ -7,7 +8,10 @@ import { UnexpectedError } from "../../../domain/errors/unexpected-error";
 export class RemoteAuthentication {
   constructor(
     private readonly url: string,
-    private readonly httpPostClient: IHttpPostClient
+    private readonly httpPostClient: IHttpPostClient<
+      AuthenticationParams,
+      AccountModel
+    >
   ) {}
   async auth(params: AuthenticationParams): Promise<void> {
     const response = await this.httpPostClient.post({
